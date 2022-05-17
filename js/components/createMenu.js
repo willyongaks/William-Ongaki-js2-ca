@@ -2,7 +2,7 @@ export function createMenu(){
 
     const { pathname } = document.location;
 
-    console.log(pathname)
+    // console.log(pathname)
 
 
 

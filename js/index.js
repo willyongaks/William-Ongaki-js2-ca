@@ -8,28 +8,62 @@ const itemsUrl = baseUrl + "articles";
 
 
 
+
 (async function() {
     const container = document.querySelector(".product_container");
+    const search = document.querySelector(".search");
 
     try{
         const response = await fetch(itemsUrl);
-        const results = await response.json();
+        let results = await response.json();
 
-        console.log(results);
+        // console.log(results);
 
-        container.innerHTML = "";
+        
 
-        results.forEach(function(result) {
+        function renderHtml() {
+            container.innerHTML = "";
+            
+            results.forEach(function (result) {
             container.innerHTML += `<div class="items_display">
                                             <div class="title">${result.title}</div>
                                             <div class="summary">${result.summary}</div>
                                             <div class="author">${result.author}</div>
                                             <button>Add to favourites</button>
                                             </div>`
-        })
+           }) 
+        }
+        renderHtml();
+
+
+        search.onkeyup = function (event) {
+            // console.log(event)
+
+            const searchValue = event.target.value.trim().toLowerCase();
+
+            const fileredresults = results.filter(function (result) {
+                if (result.author.toLowerCase().startsWith(searchValue)) {
+                    return true;
+                }
+            })
+
+            console.log(fileredresults);
+
+            results = fileredresults;
+            renderHtml();
+        }
+
+
     }
     catch(error){
         console.log(error)
     }
 
+
 })();
+
+
+
+
+
+
