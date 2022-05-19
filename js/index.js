@@ -25,11 +25,14 @@ const itemsUrl = baseUrl + "articles";
             container.innerHTML = "";
             
             results.forEach(function (result) {
+
+
             container.innerHTML += `<div class="items_display">
                                             <div class="title">${result.title}</div>
                                             <div class="summary">${result.summary}</div>
                                             <div class="author">${result.author}</div>
-                                            <button>Add to favourites</button>
+                                            <i class="fa fa-heart-o" aria-hidden="true"></i>
+                                        
                                             </div>`
            }) 
         }
@@ -47,7 +50,7 @@ const itemsUrl = baseUrl + "articles";
                 }
             })
 
-            console.log(fileredresults);
+            // console.log(fileredresults);
 
             results = fileredresults;
             renderHtml();
@@ -61,6 +64,23 @@ const itemsUrl = baseUrl + "articles";
 
 
 })();
+
+
+
+const addButton = document.querySelectorAll(".items_display .btn");
+console.log(addButton)
+
+numb.forEach(btn => {
+    btn.addEventListener("click", handleClick);
+});
+
+function handleClick(event) {
+    console.log(event)
+}
+
+
+
+
 
 
 
