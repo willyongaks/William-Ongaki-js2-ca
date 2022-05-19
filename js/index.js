@@ -1,5 +1,6 @@
 import { baseUrl } from "./settings/api.js";
 import { createMenu } from "./components/createMenu.js";
+import { getFavourites } from "./utils/favFunctions.js"
 
 
 createMenu();
@@ -12,6 +13,7 @@ const itemsUrl = baseUrl + "articles";
 (async function() {
     const container = document.querySelector(".product_container");
     const search = document.querySelector(".search");
+
 
     try{
         const response = await fetch(itemsUrl);
@@ -31,10 +33,52 @@ const itemsUrl = baseUrl + "articles";
                                             <div class="title">${result.title}</div>
                                             <div class="summary">${result.summary}</div>
                                             <div class="author">${result.author}</div>
-                                            <i class="fa fa-heart-o" aria-hidden="true"></i>
-                                        
+                                            <button class="btn" data-id="${result.id}" data-name="${result.author}">Add to favourites</button>
                                             </div>`
-           }) 
+            });
+
+            const addButton = document.querySelectorAll(".items_display .btn");
+
+            // console.log(addButton)
+
+            addButton.forEach(btn => {
+                btn.addEventListener("click", handleClick);
+            });
+
+            function handleClick(event) {
+                console.log(event)
+
+                this.classList.toggle("btn");
+                this.classList.toggle("filled");
+
+                const id = this.dataset.id;
+                const name = this.dataset.name;
+
+                const currentFavs = getFavourites();
+                console.log(getFavourites)
+                const productExist = currentFavs.find(function (fav) {
+                    return fav.id === id;
+                })
+
+
+                if (!productExist) {
+                    const product = { id: id, name: name };
+                    currentFavs.push(product);
+                    saveFavs(currentFavs);
+                }else {
+                    const newFav = currentFavs.filter(fav => fav.id !== id);
+                    saveFavs(newFav)
+                }
+
+
+            }
+
+            
+
+            function saveFavs(favs) {
+                localStorage.setItem("favaourites", JSON.stringify(favs));
+            }
+
         }
         renderHtml();
 
@@ -64,22 +108,6 @@ const itemsUrl = baseUrl + "articles";
 
 
 })();
-
-
-
-const addButton = document.querySelectorAll(".items_display .btn");
-console.log(addButton)
-
-numb.forEach(btn => {
-    btn.addEventListener("click", handleClick);
-});
-
-function handleClick(event) {
-    console.log(event)
-}
-
-
-
 
 
 

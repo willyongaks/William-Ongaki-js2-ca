@@ -114,4 +114,12 @@ input {
 .items_display button:hover {
   background-color: rgb(190, 52, 52);
   color: aliceblue;
+}
+.items_display .filled {
+  background-color: rgb(190, 52, 52);
+}
+
+/* Favouries*/
+h1 {
+  margin-top: 5rem;
 }/*# sourceMappingURL=styles.css.map */
