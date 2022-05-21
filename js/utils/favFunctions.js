@@ -1,5 +1,6 @@
-export function getFavourites() {
+export function getExistingFavs() {
     const favs = localStorage.getItem("favourites");
+    // console.log(favs)
 
     if (!favs) {
         return []
@@ -7,3 +8,4 @@ export function getFavourites() {
         return JSON.parse(favs);
     }
 }
+

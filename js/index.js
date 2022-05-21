@@ -1,6 +1,6 @@
 import { baseUrl } from "./settings/api.js";
 import { createMenu } from "./components/createMenu.js";
-import { getFavourites } from "./utils/favFunctions.js"
+import { getExistingFavs } from "./utils/favFunctions.js";
 
 
 createMenu();
@@ -33,51 +33,11 @@ const itemsUrl = baseUrl + "articles";
                                             <div class="title">${result.title}</div>
                                             <div class="summary">${result.summary}</div>
                                             <div class="author">${result.author}</div>
-                                            <button class="btn" data-id="${result.id}" data-name="${result.author}">Add to favourites</button>
+                                            <button class="btn" data-id="${result.id}" data-author="${result.author}">Add to favourites</button>
                                             </div>`
             });
 
-            const addButton = document.querySelectorAll(".items_display .btn");
 
-            // console.log(addButton)
-
-            addButton.forEach(btn => {
-                btn.addEventListener("click", handleClick);
-            });
-
-            function handleClick(event) {
-                console.log(event)
-
-                this.classList.toggle("btn");
-                this.classList.toggle("filled");
-
-                const id = this.dataset.id;
-                const name = this.dataset.name;
-
-                const currentFavs = getFavourites();
-                console.log(getFavourites)
-                const productExist = currentFavs.find(function (fav) {
-                    return fav.id === id;
-                })
-
-
-                if (!productExist) {
-                    const product = { id: id, name: name };
-                    currentFavs.push(product);
-                    saveFavs(currentFavs);
-                }else {
-                    const newFav = currentFavs.filter(fav => fav.id !== id);
-                    saveFavs(newFav)
-                }
-
-
-            }
-
-            
-
-            function saveFavs(favs) {
-                localStorage.setItem("favaourites", JSON.stringify(favs));
-            }
 
         }
         renderHtml();
@@ -102,10 +62,56 @@ const itemsUrl = baseUrl + "articles";
 
 
     }
-    catch(error){
+    catch (error) {
         console.log(error)
     }
 
+    //
+    //
+    //
+    // Toggle button item in and out of localstorage
+
+    const addButton = document.querySelectorAll(".items_display button");
+
+    // console.log(addButton)
+
+    addButton.forEach(btn => {
+        btn.addEventListener("click", handleClick);
+    });
+
+    function handleClick(event) {
+        // console.log(event)
+
+        this.classList.toggle("btn");
+        this.classList.toggle("filled");
+
+        const id = this.dataset.id;
+        const author = this.dataset.author;
+
+        
+        const currentFavs = getExistingFavs();
+
+        
+
+        const productExist = currentFavs.find(function (fav) {
+            return fav.id === id;
+        })
+
+        if (!productExist) {
+            const product = { id: id, author: author };
+            currentFavs.push(product);
+            saveFavourites(currentFavs);
+        } else {
+            const newFavs = currentFavs.filter(fav => fav.id !== id);
+            saveFavourites(newFavs);
+        }
+
+    }
+    
+
+    function saveFavourites(favs) {
+        localStorage.setItem("favourites", JSON.stringify(favs))
+    }
 
 })();
 
