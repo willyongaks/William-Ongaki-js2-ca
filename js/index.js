@@ -7,6 +7,8 @@ createMenu();
 
 const itemsUrl = baseUrl + "articles";
 
+const favourites = getExistingFavs();
+
 
 
 
@@ -21,19 +23,34 @@ const itemsUrl = baseUrl + "articles";
 
         // console.log(results);
 
-        
+
+        container.innerHTML = "";
 
         function renderHtml() {
-            container.innerHTML = "";
+
+            
+            
             
             results.forEach(function (result) {
 
+                let cssClass = "btn"
 
-            container.innerHTML += `<div class="items_display">
+                const doesObjectExist = favourites.find(function (fav) {
+                    console.log(fav)
+                    return parseInt(fav.id) === results.id
+                });
+
+                console.log(doesObjectExist)
+
+                if (doesObjectExist) {
+                    cssClass = "filled"
+                }
+
+                container.innerHTML += `<div class="items_display">
                                             <div class="title">${result.title}</div>
                                             <div class="summary">${result.summary}</div>
                                             <div class="author">${result.author}</div>
-                                            <button class="btn" data-id="${result.id}" data-author="${result.author}">Add to favourites</button>
+                                            <button class="${cssClass}" data-id="${result.id}" data-author="${result.author}" data-title="${result.title}" data-summary="${result.summary}">Add to favourites</button>
                                             </div>`
             });
 
@@ -76,6 +93,7 @@ const itemsUrl = baseUrl + "articles";
     // console.log(addButton)
 
     addButton.forEach(btn => {
+       
         btn.addEventListener("click", handleClick);
     });
 
@@ -87,6 +105,8 @@ const itemsUrl = baseUrl + "articles";
 
         const id = this.dataset.id;
         const author = this.dataset.author;
+        const title = this.dataset.title;
+        const summery = this.dataset.summary;
 
         
         const currentFavs = getExistingFavs();
@@ -98,7 +118,7 @@ const itemsUrl = baseUrl + "articles";
         })
 
         if (!productExist) {
-            const product = { id: id, author: author };
+            const product = { id: id, author: author, title:title, summary: summery };
             currentFavs.push(product);
             saveFavourites(currentFavs);
         } else {

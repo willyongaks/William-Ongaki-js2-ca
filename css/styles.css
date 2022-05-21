@@ -1,3 +1,7 @@
+html {
+  height: 100vh;
+}
+
 * {
   padding: 0;
   margin: 0;
@@ -64,6 +68,7 @@ input {
       -ms-flex-align: center;
           align-items: center;
   margin: 6rem auto;
+  position: relative;
 }
 
 .items_display {
@@ -115,6 +120,10 @@ input {
   background-color: rgb(190, 52, 52);
   color: aliceblue;
 }
+.items_display .btn {
+  background-color: black;
+  color: white;
+}
 .items_display .filled {
   background-color: rgb(190, 52, 52);
 }
@@ -122,4 +131,11 @@ input {
 /* Favouries*/
 h1 {
   margin-top: 5rem;
+}
+
+.clear {
+  position: absolute;
+  bottom: 0;
+  background-color: red;
+  padding: 5px 10px;
 }/*# sourceMappingURL=styles.css.map */
