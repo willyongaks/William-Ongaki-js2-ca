@@ -22,15 +22,25 @@ favourites.forEach(favourite => {
                         
 });
 
+function filledBtn(){
+    const filledButton = document.querySelector(".filled");
 
-const clearBtn = document.querySelector(".clear");
+    filledButton.innerHTML = "Remove"
+}
+filledBtn()
+
+
+
+function deleteBtn() {
+    const clearBtn = document.querySelector(".clear");
 
     clearBtn.addEventListener("click", handleClick);
+}
+deleteBtn()
+
 
 function handleClick() {
+
     localStorage.clear()
     window.location.reload();
 }
-
-//button that clears localStorage
-// (or just a specific key in localStorage) and reloads the display

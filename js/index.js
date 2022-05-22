@@ -1,6 +1,7 @@
 import { baseUrl } from "./settings/api.js";
 import { createMenu } from "./components/createMenu.js";
 import { getExistingFavs } from "./utils/favFunctions.js";
+import { displayMessage } from "./components/displayMessage.js";
 
 
 createMenu();
@@ -27,11 +28,12 @@ const favourites = getExistingFavs();
 
 
         function renderHtml() {
+
             container.innerHTML = "";
-            
-            
-            
+
             results.forEach(function (result) {
+                
+                
 
                 let cssClass = "btn"
 
@@ -45,6 +47,7 @@ const favourites = getExistingFavs();
                 if (doesObjectExist) {
                     cssClass = "filled"
                 }
+                
 
                 container.innerHTML += `<div class="items_display">
                                             <div class="title">${result.title}</div>
@@ -81,6 +84,7 @@ const favourites = getExistingFavs();
     }
     catch (error) {
         console.log(error)
+        displayMessage();
     }
 
     //
@@ -98,10 +102,10 @@ const favourites = getExistingFavs();
     });
 
     function handleClick(event) {
-        // console.log(event)
-
+        
         this.classList.toggle("btn");
         this.classList.toggle("filled");
+        this.innerHTML = "Remove";
 
         const id = this.dataset.id;
         const author = this.dataset.author;
@@ -125,6 +129,7 @@ const favourites = getExistingFavs();
             const newFavs = currentFavs.filter(fav => fav.id !== id);
             saveFavourites(newFavs);
         }
+
 
     }
     
