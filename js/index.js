@@ -24,10 +24,10 @@ const favourites = getExistingFavs();
         // console.log(results);
 
 
-        container.innerHTML = "";
+
 
         function renderHtml() {
-
+            container.innerHTML = "";
             
             
             
@@ -40,7 +40,7 @@ const favourites = getExistingFavs();
                     return parseInt(fav.id) === results.id
                 });
 
-                console.log(doesObjectExist)
+                // console.log(doesObjectExist)
 
                 if (doesObjectExist) {
                     cssClass = "filled"
@@ -71,7 +71,7 @@ const favourites = getExistingFavs();
                 }
             })
 
-            // console.log(fileredresults);
+            console.log(results);
 
             results = fileredresults;
             renderHtml();
